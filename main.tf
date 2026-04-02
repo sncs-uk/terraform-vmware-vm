@@ -71,11 +71,11 @@ resource "vsphere_virtual_machine" "vm" {
   }
 
   extra_config = {
-    "guestinfo.userdata" = base64gzip(var.userdata)
+    "guestinfo.userdata" = var.userdata == "" ? "" : base64gzip(var.userdata)
     "guestinfo.userdata.encoding" = var.userdata == "" ? "" : "gzip+base64"
-    "guestinfo.metadata" = base64gzip(var.metadata)
+    "guestinfo.metadata" = var.metadata == "" ? "" : base64gzip(var.metadata)
     "guestinfo.metadata.encoding" = var.metadata == "" ? "" : "gzip+base64"
-    "guestinfo.talos.config" = var.talosconfig
+    "guestinfo.talos.config" = base64encode(var.talosconfig)
   }
 
   # Customization of the VM #
@@ -84,3 +84,4 @@ resource "vsphere_virtual_machine" "vm" {
     linked_clone  = "false"
   }
 }
+
