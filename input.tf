@@ -86,3 +86,13 @@ variable "talosconfig" {
   description = "Contents of the talos config cloudinit manifest"
   default     = ""
 }
+variable "wait_for_guest_net_timeout" {
+  type = number
+  description = "Time to wait for guest network to be marked as up"
+  default = 5
+}
+variable "wait_for_guest_ip_timeout" {
+  type = number
+  description = "Time to wait for guest IP to be marked as up"
+  default = 0
+}

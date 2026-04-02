@@ -70,6 +70,9 @@ resource "vsphere_virtual_machine" "vm" {
     adapter_type = "vmxnet3"
   }
 
+  wait_for_guest_net_timeout = var.wait_for_guest_net_timeout
+  wait_for_guest_ip_timeout  = var.wait_for_guest_ip_timeout
+
   extra_config = {
     "guestinfo.userdata" = var.userdata == "" ? "" : base64gzip(var.userdata)
     "guestinfo.userdata.encoding" = var.userdata == "" ? "" : "gzip+base64"

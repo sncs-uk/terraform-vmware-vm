@@ -51,6 +51,8 @@ No modules.
 | <a name="input_userdata"></a> [userdata](#input\_userdata) | Contents of the userdata.yml cloudinit manifest | `string` | `""` | no |
 | <a name="input_vCPUs"></a> [vCPUs](#input\_vCPUs) | The number of vCPUs to assign to the VM. | `number` | `2` | no |
 | <a name="input_vm_folder"></a> [vm\_folder](#input\_vm\_folder) | The VM folder into which the the VM will be placed. | `string` | n/a | yes |
+| <a name="input_wait_for_guest_ip_timeout"></a> [wait\_for\_guest\_ip\_timeout](#input\_wait\_for\_guest\_ip\_timeout) | Time to wait for guest IP to be marked as up | `number` | `0` | no |
+| <a name="input_wait_for_guest_net_timeout"></a> [wait\_for\_guest\_net\_timeout](#input\_wait\_for\_guest\_net\_timeout) | Time to wait for guest network to be marked as up | `number` | `5` | no |
 
 ## Outputs
 
