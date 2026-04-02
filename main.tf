@@ -71,33 +71,11 @@ resource "vsphere_virtual_machine" "vm" {
   }
 
   extra_config = {
-    "guestinfo.userdata" = base64gzip(
-      templatefile(
-        "${path.module}/templates/userdata.yaml.tmpl",
-        {
-          username        = var.username,
-          ssh_keys        = var.ssh_keys,
-          custom_userdata = var.custom_userdata
-        }
-      )
-    )
-    "guestinfo.userdata.encoding" = "gzip+base64"
-    "guestinfo.metadata" = base64gzip(
-      templatefile(
-        "${path.module}/templates/metadata.yaml.tmpl",
-        {
-          hostname    = var.hostname,
-          nic_name    = var.ethernet_adapter
-          dhcp4       = length(var.ipv4_addresses) == 0,
-          dhcp6       = length(var.ipv6_addresses) == 0,
-          addresses   = concat(var.ipv4_addresses, var.ipv6_addresses)
-          gateway4    = var.ipv4_gateway
-          gateway6    = var.ipv6_gateway
-          nameservers = var.nameservers
-        }
-      )
-    )
-    "guestinfo.metadata.encoding" = "gzip+base64"
+    "guestinfo.userdata" = base64gzip(var.userdata)
+    "guestinfo.userdata.encoding" = var.userdata == "" ? "" : "gzip+base64"
+    "guestinfo.metadata" = base64gzip(var.metadata)
+    "guestinfo.metadata.encoding" = var.metadata == "" ? "" : "gzip+base64"
+    "guestinfo.talos.config" = var.talosconfig
   }
 
   # Customization of the VM #

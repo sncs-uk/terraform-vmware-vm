@@ -14,43 +14,9 @@ variable "network_name" {
   default     = "VM Network"
 }
 
-variable "ipv4_addresses" {
-  type        = list(string)
-  description = "A list of IPv4 addresses to assign to the VM."
-  default     = []
-}
-variable "ipv4_gateway" {
-  type        = string
-  description = "The IPv4 gateway to assign to the VM."
-  default     = null
-}
-
-variable "ipv6_addresses" {
-  type        = list(string)
-  description = "A list of IPv6 addresses to assign to the VM."
-  default     = []
-}
-variable "ipv6_gateway" {
-  type        = string
-  description = "The IPv6 gateway to assign to the VM."
-  default     = null
-}
-
 variable "nameservers" {
   type        = list(string)
   description = "The DNS servers to assign to the VM."
-  default     = []
-}
-
-variable "username" {
-  type        = string
-  description = "The username to set up within the VM."
-  default     = "sncsuser"
-}
-
-variable "ssh_keys" {
-  type        = list(string)
-  description = "A list of public SSH keys to add to the authorized keys file of the user."
   default     = []
 }
 
@@ -105,14 +71,18 @@ variable "additional_disks" {
   default     = []
 }
 
-variable "ethernet_adapter" {
+variable "userdata" {
   type        = string
-  description = "Ehternet adapater to which to apply network configuration"
-  default     = "ens192"
+  description = "Contents of the userdata.yml cloudinit manifest"
+  default     = ""
 }
-
-variable "custom_userdata" {
+variable "metadata" {
   type        = string
-  description = "Any custom data to include in the userdata.yml cloudinit manifest"
+  description = "Contents of the metadata.yaml cloudinit manifest"
+  default     = ""
+}
+variable "talosconfig" {
+  type        = string
+  description = "Contents of the talos config cloudinit manifest"
   default     = ""
 }
