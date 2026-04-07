@@ -74,17 +74,24 @@ resource "vsphere_virtual_machine" "vm" {
   wait_for_guest_ip_timeout  = var.wait_for_guest_ip_timeout
 
   extra_config = {
-    "guestinfo.userdata" = var.userdata == "" ? "" : base64gzip(var.userdata)
+    "guestinfo.userdata"          = var.userdata == "" ? "" : base64gzip(var.userdata)
     "guestinfo.userdata.encoding" = var.userdata == "" ? "" : "gzip+base64"
-    "guestinfo.metadata" = var.metadata == "" ? "" : base64gzip(var.metadata)
+    "guestinfo.metadata"          = var.metadata == "" ? "" : base64gzip(var.metadata)
     "guestinfo.metadata.encoding" = var.metadata == "" ? "" : "gzip+base64"
-    "guestinfo.talos.config" = base64encode(var.talosconfig)
+    "guestinfo.talos.config"      = base64encode(var.talosconfig)
   }
 
   # Customization of the VM #
   clone {
     template_uuid = data.vsphere_virtual_machine.template.id
     linked_clone  = "false"
+  }
+
+  # Ignore changes to the guestinfo, as it can cause re-creation where there shoulldn't be
+  lifecycle {
+    ignore_changes = [
+      extra_config
+    ]
   }
 }
 
